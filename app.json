@@ -1,0 +1,27 @@
+{
+  "name": "dreamhouse-pio",
+  "description": "DreamHouse Recommendation Engine built with PredictionIO",
+  "keywords": [
+    "machinelearning",
+    "predictionio"
+  ],
+  "repository": "https://github.com/dreamhouseapp/dreamhouse-pio",
+  "env": {
+    "ACCESS_KEY": {
+      "description": "PredictionIO Event Server App Access Key"
+    },
+    "DREAMHOUSE_WEB_APP_URL": {
+      "description": "The base URL of your DreamHouse Web App, e.g. https://foo.herokuapp.com"
+    },
+    "EVENT_SERVER_IP": {
+      "description": "PredictionIO Event Server Name"
+    },
+    "EVENT_SERVER_PORT": {
+      "description": "PredictionIO Event Server Port"
+    },
+    "JAVA_OPTS": {
+      "description": "Java runtime settings",
+      "value": "-Xss4m"
+    }
+  }
+}

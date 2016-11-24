@@ -1,0 +1,1 @@
+web: source bin/env.sh && target/universal/stage/bin/dreamhouse-pio -main ServerApp
