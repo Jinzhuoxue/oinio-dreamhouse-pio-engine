@@ -25,8 +25,8 @@ class DataSource(val dsp: DataSourceParams)
       // targetEntityType is optional field of an event.
       targetEntityType = Some(Some("item")))(sc)
 
-    val ratingsRDD: RDD[Favorite] = eventsRDD.map { event =>
-      val rating = try {
+    val favoritesRDD: RDD[Favorite] = eventsRDD.map { event =>
+      val favorite = try {
         // entityId and targetEntityId is String
         Favorite(event.properties.get[String]("propertyId"), event.properties.get[String]("userId"))
       } catch {
@@ -35,10 +35,10 @@ class DataSource(val dsp: DataSourceParams)
           throw e
         }
       }
-      rating
+      favorite
     }.cache()
 
-    ratingsRDD
+    favoritesRDD
   }
 
   override
@@ -49,9 +49,9 @@ class DataSource(val dsp: DataSourceParams)
 case class Favorite(propertyId: String, userId: String)
 
 class TrainingData(
-                    val ratings: RDD[Favorite]
+                    val favorites: RDD[Favorite]
                   ) extends Serializable {
   override def toString = {
-    s"ratings: [${ratings.count()}] (${ratings.take(2).toList}...)"
+    s"ratings: [${favorites.count()}] (${favorites.take(2).toList}...)"
   }
 }
