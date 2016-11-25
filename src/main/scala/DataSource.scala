@@ -12,7 +12,7 @@ import org.json4s.jackson.JsonMethods._
 
 case class DataSourceEvalParams(kFold: Int, queryNum: Int)
 
-case class DataSourceParams(appName: String) extends Params
+case class DataSourceParams(eventServerIp: String, eventServerPort: String, accessKey: String) extends Params
 
 class DataSource(val dsp: DataSourceParams)
   extends PDataSource[TrainingData,
@@ -23,7 +23,7 @@ class DataSource(val dsp: DataSourceParams)
   def getRatings(sc: SparkContext): RDD[Favorite] = {
 
     val eventsRDD: RDD[Event] = PEventStore.find(
-      appName = dsp.appName,
+      appName = dsp.eventServerIp,
       entityType = Some("user"),
       eventNames = Some(List("rate", "buy")), // read "rate" and "buy" event
       // targetEntityType is optional field of an event.
@@ -51,17 +51,18 @@ class DataSource(val dsp: DataSourceParams)
 
     val httpClient = new HttpClient()
 
-    val getFavorites = new GetMethod(dsp.appName + "/favorite-all")
+    val getFavorites = new GetMethod(dsp.eventServerIp +":" + dsp.eventServerPort + "/events.json?accessKey=" + dsp.accessKey)
 
     httpClient.executeMethod(getFavorites)
 
     val json = parse(getFavorites.getResponseBodyAsStream)
 
     val favorites = for {
-      JArray(favorites) <- json
-      JObject(favorite) <- favorites
-      JField("sfid", JString(propertyId)) <- favorite
-      JField("favorite__c_user__c", JString(userId)) <- favorite
+      JArray(events) <- json
+      JObject(event) <- events
+      JField("properties", JObject(properties)) <- event
+      JField("propertyId", JString(propertyId)) <- properties
+      JField("userId", JString(userId)) <- properties
     } yield Favorite(propertyId, userId)
 
     val rdd = sc.parallelize(favorites)
