@@ -5,6 +5,10 @@ import org.apache.spark.SparkContext
 import org.apache.spark.SparkContext._
 import org.apache.spark.rdd.RDD
 import grizzled.slf4j.Logger
+import org.apache.commons.httpclient.HttpClient
+import org.apache.commons.httpclient.methods.GetMethod
+import org.json4s._
+import org.json4s.jackson.JsonMethods._
 
 case class DataSourceEvalParams(kFold: Int, queryNum: Int)
 
@@ -43,7 +47,26 @@ class DataSource(val dsp: DataSourceParams)
 
   override
   def readTraining(sc: SparkContext): TrainingData = {
-    new TrainingData(getRatings(sc))
+    //new TrainingData(getRatings(sc))
+
+    val httpClient = new HttpClient()
+
+    val getFavorites = new GetMethod(dsp.appName + "/favorite-all")
+
+    httpClient.executeMethod(getFavorites)
+
+    val json = parse(getFavorites.getResponseBodyAsStream)
+
+    val favorites = for {
+      JArray(favorites) <- json
+      JObject(favorite) <- favorites
+      JField("sfid", JString(propertyId)) <- favorite
+      JField("favorite__c_user__c", JString(userId)) <- favorite
+    } yield Favorite(propertyId, userId)
+
+    val rdd = sc.parallelize(favorites)
+
+    new TrainingData(rdd)
   }
 }
 case class Favorite(propertyId: String, userId: String)
