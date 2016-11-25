@@ -36,7 +36,8 @@ object TrainApp extends App {
 
     WorkflowUtils.modifyLogging(workflowConfig.verbose)
 
-    val dataSourceParams = DataSourceParams(sys.env.get("DREAMHOUSE_WEB_APP_URL").get)
+    //val dataSourceParams = DataSourceParams(sys.env.get("DREAMHOUSE_WEB_APP_URL").get)
+    val dataSourceParams = DataSourceParams(sys.env.get("APP_NAME").get)
     val preparatorParams = EmptyParams()
     val algorithmParamsList = Seq("als" -> AlgorithmParams(rank = 10, numIterations = 10, lambda = 0.01, tmpDir = Files.createTempDirectory("model").toFile.getAbsolutePath))
     val servingParams = EmptyParams()
