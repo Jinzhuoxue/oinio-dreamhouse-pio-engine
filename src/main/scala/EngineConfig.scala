@@ -1,3 +1,5 @@
+package org.template.classification
+
 object EngineConfig {
 
   val engineId = sys.env.getOrElse("ENGINE_ID", "default")

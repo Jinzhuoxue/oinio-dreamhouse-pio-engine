@@ -1,3 +1,4 @@
+package org.template.classification
 import java.nio.file.Files
 
 import io.prediction.controller.{EmptyParams, EngineParams}
@@ -7,6 +8,10 @@ import io.prediction.workflow._
 import org.joda.time.DateTime
 
 object TrainApp extends App {
+
+  val eventServerIp = sys.env.getOrElse("EVENT_SERVER_IP", "localhost")
+  val eventServerPort = sys.env.getOrElse("EVENT_SERVER_PORT", "7070").toInt
+  val maybeAccessKey = sys.env.get("ACCESS_KEY")
 
   def train() = {
     // WTF: envs must not be empty or CreateServer.engineInstances.get... fails due to JDBCUtils.stringToMap
@@ -36,9 +41,11 @@ object TrainApp extends App {
 
     WorkflowUtils.modifyLogging(workflowConfig.verbose)
 
-    val dataSourceParams = DataSourceParams(sys.env.get("DREAMHOUSE_WEB_APP_URL").get)
+    //val dataSourceParams = DataSourceParams(sys.env.get("DREAMHOUSE_WEB_APP_URL").get)
+    val dataSourceParams = DataSourceParams(sys.env.get("EVENT_SERVER_IP").get, sys.env.get("EVENT_SERVER_PORT").get, sys.env.get("ACCESS_KEY").get)
+    //val dataSourceParams = DataSourceParams(sys.env.get("APP_NAME").get)
     val preparatorParams = EmptyParams()
-    val algorithmParamsList = Seq("als" -> AlgorithmParams(rank = 10, numIterations = 10, lambda = 0.01, tmpDir = Files.createTempDirectory("model").toFile.getAbsolutePath))
+    val algorithmParamsList = Seq("als" -> AlgorithmParams(epochs = 1))
     val servingParams = EmptyParams()
 
     val engineInstance = EngineInstance(

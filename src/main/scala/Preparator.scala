@@ -1,14 +1,17 @@
+package org.template.classification
+
 import io.prediction.controller.PPreparator
 
 import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD
 
+class PreparedData(
+  val dataRDD: RDD[Consumption]
+) extends Serializable
+
 class Preparator extends PPreparator[TrainingData, PreparedData] {
 
   def prepare(sc: SparkContext, trainingData: TrainingData): PreparedData = {
-    PreparedData(trainingData.favorites)
+    new PreparedData(trainingData.dataRDD)
   }
-
 }
-
-case class PreparedData(favorites: RDD[Favorite])
