@@ -15,6 +15,8 @@ libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-core"    % "1.2.0" % "provided",
   "org.apache.spark" %% "spark-mllib"   % "1.2.0" % "provided")
 
+resolvers += "OSS Sonatype" at "https://repo1.maven.org/maven2/"
+
 cancelable in Global := true
 
 mainClass in Compile := Some("ServerApp")
