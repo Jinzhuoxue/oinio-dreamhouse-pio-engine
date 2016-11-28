@@ -1,9 +1,8 @@
-import java.nio.file.Files
 
-import io.prediction.controller.{EmptyParams, EngineParams}
-import io.prediction.data.storage.EngineInstance
-import io.prediction.workflow.CreateWorkflow.WorkflowConfig
-import io.prediction.workflow._
+import org.apache.predictionio.controller.{EmptyParams, EngineParams}
+import org.apache.predictionio.data.storage.EngineInstance
+import org.apache.predictionio.workflow._
+import org.apache.predictionio.workflow.CreateWorkflow.WorkflowConfig
 import org.joda.time.DateTime
 
 object TrainApp extends App {
@@ -17,7 +16,7 @@ object TrainApp extends App {
     // WTF: envs must not be empty or CreateServer.engineInstances.get... fails due to JDBCUtils.stringToMap
     val sparkConf = Map("spark.executor.extraClassPath" -> ".")
 
-    val engineFactoryName = "RecommendationEngine"
+    val engineFactoryName = "ClassificationEngine"
 
     val workflowConfig: WorkflowConfig = CreateWorkflow.WorkflowConfig(
       engineId = EngineConfig.engineId,
@@ -36,9 +35,9 @@ object TrainApp extends App {
 
     WorkflowUtils.modifyLogging(workflowConfig.verbose)
 
-    val dataSourceParams = DataSourceParams(sys.env.get("DREAMHOUSE_WEB_APP_URL").get)
+    val dataSourceParams = DataSourceParams(sys.env.get("EVENT_SERVER_IP").get, sys.env.get("EVENT_SERVER_PORT").get, sys.env.get("ACCESS_KEY").get)
     val preparatorParams = EmptyParams()
-    val algorithmParamsList = Seq("als" -> AlgorithmParams(rank = 10, numIterations = 10, lambda = 0.01, tmpDir = Files.createTempDirectory("model").toFile.getAbsolutePath))
+    val algorithmParamsList = Seq("als" -> AlgorithmParams(lambda = 1))
     val servingParams = EmptyParams()
 
     val engineInstance = EngineInstance(
