@@ -17,6 +17,6 @@ libraryDependencies ++= Seq(
 
 cancelable in Global := true
 
-mainClass in Compile := Some("org.template.classification.ServerApp")
+mainClass in Compile := Some("ServerApp")
 
 enablePlugins(JavaAppPackaging)

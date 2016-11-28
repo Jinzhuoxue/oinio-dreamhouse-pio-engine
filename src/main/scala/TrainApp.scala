@@ -1,4 +1,4 @@
-package org.template.classification
+//package org.template.classification
 import java.nio.file.Files
 
 import io.prediction.controller.{EmptyParams, EngineParams}

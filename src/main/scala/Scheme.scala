@@ -1,4 +1,4 @@
-package org.template.classification
+//package org.template.classification
 
 case class Consumption(
   circuit  : String,

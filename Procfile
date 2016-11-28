@@ -1,1 +1,1 @@
-web: source bin/env.sh && target/universal/stage/bin/dreamhouse-pio -main org.template.classification.ServerApp
+web: source bin/env.sh && target/universal/stage/bin/dreamhouse-pio -main ServerApp
