@@ -15,7 +15,7 @@ import org.apache.commons.httpclient.methods.GetMethod
 import org.json4s.JsonAST._
 import org.json4s.jackson.JsonMethods.parse
 
-case class DataSourceParams(eventServerIp: String, eventServerPort: String, accessKey: String) extends Params
+case class DataSourceParams(appName: String, eventServerIp: String, eventServerPort: String, accessKey: String) extends Params
 
 class DataSource(val dsp: DataSourceParams)
   extends PDataSource[TrainingData,

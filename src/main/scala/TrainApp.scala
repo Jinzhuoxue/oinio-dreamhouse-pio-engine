@@ -35,7 +35,7 @@ object TrainApp extends App {
 
     WorkflowUtils.modifyLogging(workflowConfig.verbose)
 
-    val dataSourceParams = DataSourceParams(sys.env.get("EVENT_SERVER_IP").get, sys.env.get("EVENT_SERVER_PORT").get, sys.env.get("ACCESS_KEY").get)
+    val dataSourceParams = DataSourceParams(sys.env.get("APP_NAME").get,sys.env.get("EVENT_SERVER_IP").get, sys.env.get("EVENT_SERVER_PORT").get, sys.env.get("ACCESS_KEY").get)
     val preparatorParams = EmptyParams()
     val algorithmParamsList = Seq("als" -> AlgorithmParams(lambda = 1))
     val servingParams = EmptyParams()
