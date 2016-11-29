@@ -59,17 +59,18 @@ class DataSource(val dsp: DataSourceParams)
 
     val json = parse(getFavorites.getResponseBodyAsStream)
 
-    logger.info(json);
+    logger.info(json)
     val labeledPoints = for {
       JArray(events) <- json
       JObject(event) <- events
       JField("properties", JObject(properties)) <- event
-      JField("plan", JDouble(plan)) <- properties
-      JField("attr0", JDouble(attr0)) <- properties
-      JField("attr1", JDouble(attr1)) <- properties
-      JField("attr2", JDouble(attr2)) <- properties
-    } yield LabeledPoint(plan, Vectors.dense(Array(attr0, attr1, attr2)))
+      JField("plan", JString(plan)) <- properties
+      JField("attr0", JString(attr0)) <- properties
+      JField("attr1", JString(attr1)) <- properties
+      JField("attr2", JString(attr2)) <- properties
+    } yield LabeledPoint(plan.toDouble, Vectors.dense(Array(attr0.toDouble, attr1.toDouble, attr2.toDouble)))
 
+    logger.info(labeledPoints)
     val rdd = sc.parallelize(labeledPoints)
 
     new TrainingData(rdd)
