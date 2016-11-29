@@ -1,8 +1,14 @@
+import AssemblyKeys._
+
+assemblySettings
+
 name := "dreamhouse-pio"
 
 parallelExecution in Test := false
 
 ivyScala := ivyScala.value map { _.copy(overrideScalaVersion = true) }
+
+organization := "org.apache.predictionio"
 
 libraryDependencies ++= Seq(
   "org.apache.predictionio" %% "apache-predictionio-core" % "0.10.0-incubating" % "provided",
