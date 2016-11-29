@@ -1,8 +1,8 @@
 
-import org.apache.predictionio.controller.{EmptyParams, EngineParams}
-import org.apache.predictionio.data.storage.EngineInstance
-import org.apache.predictionio.workflow._
-import org.apache.predictionio.workflow.CreateWorkflow.WorkflowConfig
+import io.prediction.controller.{EmptyParams, EngineParams}
+import io.prediction.data.storage.EngineInstance
+import io.prediction.workflow._
+import io.prediction.workflow.CreateWorkflow.WorkflowConfig
 import org.joda.time.DateTime
 
 object TrainApp extends App {

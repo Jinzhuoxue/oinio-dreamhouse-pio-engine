@@ -1,9 +1,9 @@
 import akka.actor.ActorSystem
 import akka.io.IO
 
-import org.apache.predictionio.controller.Engine
-import org.apache.predictionio.data.storage.EngineManifest
-import org.apache.predictionio.workflow.{CreateServer, ServerConfig, WorkflowUtils}
+import io.prediction.controller.Engine
+import io.prediction.data.storage.EngineManifest
+import io.prediction.workflow.{CreateServer, ServerConfig, WorkflowUtils}
 import spray.can.Http
 import spray.can.server.ServerSettings
 

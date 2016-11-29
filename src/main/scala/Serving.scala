@@ -1,5 +1,5 @@
 
-import org.apache.predictionio.controller.LServing
+import io.prediction.controller.LServing
 
 class Serving extends LServing[Query, PredictedResult] {
 

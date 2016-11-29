@@ -1,6 +1,6 @@
 
-import org.apache.predictionio.controller.EngineFactory
-import org.apache.predictionio.controller.Engine
+import io.prediction.controller.EngineFactory
+import io.prediction.controller.Engine
 
 class Query(
   val attr0 : Double,

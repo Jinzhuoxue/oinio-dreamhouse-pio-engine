@@ -1,5 +1,5 @@
-import org.apache.predictionio.controller.Evaluation
-import org.apache.predictionio.controller.MetricEvaluator
+import io.prediction.controller.Evaluation
+import io.prediction.controller.MetricEvaluator
 
 object CompleteEvaluation extends Evaluation {
   engineEvaluator = (
