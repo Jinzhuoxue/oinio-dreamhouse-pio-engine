@@ -59,6 +59,7 @@ class DataSource(val dsp: DataSourceParams)
 
     val json = parse(getFavorites.getResponseBodyAsStream)
 
+    logger.info(json);
     val labeledPoints = for {
       JArray(events) <- json
       JObject(event) <- events
