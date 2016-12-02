@@ -6,12 +6,14 @@ name := "dreamhouse-pio"
 
 organization := "io.prediction"
 
+resolvers += "OSS Sonatype" at "https://repo1.maven.org/maven2/"
+
 parallelExecution in Test := false
 
 ivyScala := ivyScala.value map { _.copy(overrideScalaVersion = true) }
 
 libraryDependencies ++= Seq(
-  "io.prediction"    %% "core"        % "0.9.6" % "provided",
+  //"io.prediction"    %% "core"        % "0.9.6" % "provided",
   "org.apache.spark" %% "spark-core"    % "1.2.0" % "provided",
   "org.apache.spark" %% "spark-mllib"   % "1.2.0" % "provided")
 
